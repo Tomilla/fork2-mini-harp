@@ -1,20 +1,19 @@
-module.exports = function() {
-    var parsedArgv = require( 'minimist' )(process.argv.slice( 2 ));
-    var createMiniHarp = require( "connect" )
-        , app = createMiniHarp();
+var connect = require( 'connect'),
+    serve_static = require( "serve-static" );
 
-    //by default, set port as '4000', avoid port undefined.
-    parsedArgv.port = parsedArgv.port === undefined ? 4000 : parsedArgv.port;
-    console.log( "Starting mini-harp on http://localhost:" +
-        parsedArgv.port );
+module.exports = function( path ) {
+    var app = connect();
 
     app.use( function( req, res, next) {
-        if  (req.url == "/current-time" ) {
+        if (req.url == "/current-time" ) {
             res.end( (new Date()).toISOString() );
         }
         else {
             next();
         }
     });
-    app.listen(parsedArgv.port);
+
+    app.use(serve_static( path ));
+    return app;
 };
+
