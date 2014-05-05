@@ -1,0 +1,25 @@
+{
+  "name": "fork2-mini-harp",
+  "version": "0.0.0",
+  "description": "Mini Harp Static Server",
+  "main": "./index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomilla/fork2-mini-harp"
+  },
+  "author": "Gero rim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tomilla/fork2-mini-harp/issues"
+  },
+  "homepage": "https://github.com/tomilla/fork2-mini-harp",
+  "dependencies": {
+    "connect": "^3.0.0-rc.1"
+  },
+  "bin": {
+    "mini-harp": "./bin/mini-harp.js"
+  }
+}
