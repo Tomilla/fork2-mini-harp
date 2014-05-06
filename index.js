@@ -21,6 +21,16 @@ module.exports = function( dir ) {
         req.url = '/index.html';
     }
     next();
+  });
+  app.use( function (req, res ,next) {
+    if ( path.extname(req.url) == '.jade' ||
+      path.extname(req.url) == '.less' ) {
+      res.statusCode = 404;
+      res.end();
+    }
+    else {
+    next();
+    }
   })
 
   app.use( serve_static( dir ));
