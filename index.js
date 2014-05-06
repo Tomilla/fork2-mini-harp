@@ -1,14 +1,14 @@
-var connect = require( 'connect')
+var connect = require( 'connect' )
+  , app = connect()
   , path = require( 'path' )
   , serve_static = require( "serve-static" )
   , makeJade = require( './lib/processor/jade' )
   , makeLess = require( './lib/processor/less' );
 
 module.exports = function( dir ) {
-  var app = connect();
 
-  app.use( function( req, res, next) {
-    if (req.url == "/current-time" ) {
+  app.use( function( req, res, next ) {
+    if ( req.url == "/current-time" ) {
       res.end( (new Date()).toISOString() + '\n' );
     } else {
       //call the next function if the middleware doesn't know
@@ -16,26 +16,25 @@ module.exports = function( dir ) {
       next();
     }
   });
-  app.use( function (req, res, next) {
-    if (req.url == '/') {
-        req.url = '/index.html';
+  app.use( function( req, res, next ) {
+    if ( req.url == '/' ) {
+      req.url = '/index.html';
     }
     next();
   });
-  app.use( function (req, res ,next) {
+  app.use( function( req, res ,next ) {
     if ( path.extname(req.url) == '.jade' ||
       path.extname(req.url) == '.less' ) {
       res.statusCode = 404;
       res.end();
     }
     else {
-    next();
+      next();
     }
-  })
+  });
 
   app.use( serve_static( dir ));
   app.use( makeJade( dir ));
   app.use( makeLess( dir ));
   return app;
 };
-
