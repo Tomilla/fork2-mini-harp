@@ -16,6 +16,12 @@ module.exports = function( dir ) {
       next();
     }
   });
+  app.use( function (req, res, next) {
+    if (req.url == '/') {
+        req.url = '/index.html';
+    }
+    next();
+  })
 
   app.use( serve_static( dir ));
   app.use( makeJade( dir ));
