@@ -1,7 +1,10 @@
-function createMiniHarp( path ) {
-  var connect = require( 'connect')
+var connect = require( 'connect')
+  , path = require( 'path' )
   , serve_static = require( "serve-static" )
-  , app = connect();
+  , makeJade = require( './lib/processor/jade' );
+
+module.exports = function( dir ) {
+  var app = connect();
 
   app.use( function( req, res, next) {
     if (req.url == "/current-time" ) {
@@ -13,8 +16,8 @@ function createMiniHarp( path ) {
     }
   });
 
-  app.use( serve_static( path ));
+  app.use( serve_static( dir ));
+  app.use( makeJade( dir ));
   return app;
 };
 
-module.exports = createMiniHarp;
