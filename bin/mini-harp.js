@@ -1,15 +1,12 @@
 #!/usr/bin/env node
-var createMiniHarp = require( "../index" ),
-    root = process.cwd(),   // current directory
-    parsedArgv = require( 'minimist' )(process.argv.slice( 2 ));
-
+var createMiniHarp = require( "../index" )
+  , argv = require( 'minimist' )(process.argv.slice( 2 ))
+  , root = argv._.length > 0 ? argv._ : process.cwd();
 //by default, set port as '4000', avoid port undefined.
-parsedArgv.port = parsedArgv.port == undefined ? 4000 : parsedArgv.port;
-console.log( "Starting mini-harp on http://localhost:" +
-    parsedArgv.port );
+argv.port = argv.port || 4000;
 
-root =  parsedArgv._.length > 0 ? parsedArgv._ : root;
+console.log( "Starting mini-harp on http://localhost:"
+            + argv.port );
 
-var app = createMiniHarp( root );
-app.listen( parsedArgv.port );
+createMiniHarp( root ).listen( argv.port );
 
