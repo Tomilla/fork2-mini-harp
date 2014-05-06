@@ -1,7 +1,8 @@
 var connect = require( 'connect')
   , path = require( 'path' )
   , serve_static = require( "serve-static" )
-  , makeJade = require( './lib/processor/jade' );
+  , makeJade = require( './lib/processor/jade' )
+  , makeLess = require( './lib/processor/less' );
 
 module.exports = function( dir ) {
   var app = connect();
@@ -18,6 +19,7 @@ module.exports = function( dir ) {
 
   app.use( serve_static( dir ));
   app.use( makeJade( dir ));
+  app.use( makeLess( dir ));
   return app;
 };
 
